@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oporto Itinerario - ReactJS y Leaflet</title>
+  <title>Itinerario - ReactJS y Leaflet</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
@@ -16,117 +17,158 @@
     }
   </style>
 </head>
+
 <body>
   <div id="root"></div>
   <script type="text/babel">
     const { useState, useEffect } = React;
 
     const locations = [
-  {
-    day: 1,
-    positionInDay: 1,
-    name: 'Avenida dos Aliados',
-    lat: 41.147517,
-    lng: -8.611665,
-    description: 'El corazón de Oporto, rodeado de edificios históricos y monumentos emblemáticos.'
-  },
-  {
-    day: 1,
-    positionInDay: 2,
-    name: 'Estación de São Bento',
-    lat: 41.145556,
-    lng: -8.610586,
-    description: 'Una estación de tren histórica, conocida por su vestíbulo decorado con azulejos portugueses.'
-  },
-  {
-    day: 1,
-    positionInDay: 3,
-    name: 'Rua das Flores',
-    lat: 41.143171,
-    lng: -8.614787,
-    description: 'Una calle peatonal llena de tiendas, restaurantes y lugares de interés turístico.'
-  },
-  {
-    day: 1,
-    positionInDay: 4,
-    name: 'Iglesia de San Ildefonso',
-    lat: 41.146056,
-    lng: -8.605936,
-    description: 'Una iglesia barroca con una fachada de azulejos portugueses azules y blancos.'
-  },
-  {
-    day: 1,
-    positionInDay: 5,
-    name: 'Librería Lello',
-    lat: 41.146906,
-    lng: -8.614493,
-    description: 'Una de las librerías más bellas del mundo, famosa por su arquitectura y decoración neogótica.'
-  },
-  {
-    day: 1,
-    positionInDay: 6,
-    name: 'Torre de los Clérigos',
-    lat: 41.145665,
-    lng: -8.613786,
-    description: 'Una torre barroca que ofrece vistas panorámicas de Oporto desde su mirador.'
-  },
-  {
-    day: 2,
-    positionInDay: 1,
-    name: 'Ribeira',
-    lat: 41.140476,
-    lng: -8.614785,
-    description: 'El pintoresco barrio histórico a orillas del río Duero, famoso por sus callejuelas y plazas.'
-  },
-  {
-    day: 2,
-    positionInDay: 2,
-    name: 'Puente Dom Luís I',
-    lat: 41.140404,
-    lng: -8.609861,
-    description: 'Un icónico puente de dos niveles que conecta Oporto con Vila Nova de Gaia.'
-  },
-  {
-    day: 2,
-    positionInDay: 3,
-    name: 'Vila Nova de Gaia',
-    lat: 41.1333,
-    lng: -8.6172,
-    description: 'Una ciudad ubicada al otro lado del río Duero, famosa por sus bodegas de vino de Oporto.'
-  },
-  {
-    day: 2,
-    positionInDay: 4,
-    name: 'Catedral (Sé)',
-    lat: 41.142895,
-    lng: -8.611267,
-    description: 'La catedral de Oporto, una impresionante estructura que combina estilos románico, gótico y barroco.'
-  },
-  {
-    day: 2,
-    positionInDay: 5,
-    name: 'Palacio da Bolsa',
-    lat: 41.141405,
-    lng: -8.615861,
-    description: 'Un palacio del siglo XIX que solía ser la bolsa de valores de Oporto, conocido por su ornamentado Salón Árabe.'
-  },
-  {
-    day: 3,
-    positionInDay: 1,
-    name: 'Guimarães',
-    lat: 41.44443,
-    lng: -8.29619,
-    description: 'Una ciudad histórica considerada la cuna de Portugal, con un castillo medieval y un palacio renacentista.'
-  },
-  {
-    day: 4,
-    positionInDay: 1,
-    name: 'Aveiro',
-    lat: 40.641184,
-    lng: -8.653617,
-    description: 'Una encantadora ciudad costera apodada la "Venecia de Portugal" por sus canales y coloridos barcos moliceiros.'
-  }
-];
+      {
+        day: 1,
+        positionInDay: 1,
+        name: "Santiago de Compostela Cathedral",
+        lat: 42.8806,
+        lng: -8.5456,
+        description: "Visit the stunning cathedral, one of the most important pilgrimage sites in the world.",
+        duration: "1-2 hours"
+      },
+      {
+        day: 1,
+        positionInDay: 2,
+        name: "Plaza del Obradoiro",
+        lat: 42.8808,
+        lng: -8.5446,
+        description: "Explore the beautiful plaza in front of the cathedral, surrounded by historic buildings and monuments.",
+        duration: "30 minutes - 1 hour"
+      },
+      {
+        day: 1,
+        positionInDay: 3,
+        name: "Monastery of San Paio de Antealtares",
+        lat: 42.8804,
+        lng: -8.5444,
+        description: "Visit this medieval monastery, which was founded in the 9th century and now houses a museum.",
+        duration: "1-2 hours"
+      },
+      {
+        day: 1,
+        positionInDay: 4,
+        name: "Colexiata de Santa María a Real do Sar",
+        lat: 42.8495,
+        lng: -8.5614,
+        description: "Explore this beautiful Romanesque church, which dates back to the 12th century.",
+        duration: "1-2 hours"
+      },
+      {
+        day: 2,
+        positionInDay: 1,
+        name: "Museo do Pobo Galego",
+        lat: 42.8792,
+        lng: -8.5425,
+        description: "Discover Galician culture and history at this fascinating museum.",
+        duration: "1-2 hours"
+      },
+      {
+        day: 2,
+        positionInDay: 2,
+        name: "Parque de la Alameda",
+        lat: 42.8803,
+        lng: -8.5447,
+        description: "Relax and enjoy the beautiful gardens and views of the city from this popular park.",
+        duration: "1-2 hours"
+      },
+      {
+        day: 2,
+        positionInDay: 3,
+        name: "Convento de San Francisco de Asís",
+        lat: 42.8799,
+        lng: -8.5453,
+        description: "Explore the historic convent, which now houses the Galician Center of Contemporary Art.",
+        duration: "1-2 hours"
+      },
+      {
+        day: 2,
+        positionInDay: 4,
+        name: "Cidade da Cultura de Galicia",
+        lat: 42.8638,
+        lng: -8.5396,
+        description: "Visit this modern cultural complex, which features a library, museum, and performance spaces.",
+        duration: "2-3 hours"
+      },
+      {
+        day: 3,
+        positionInDay: 1,
+        name: "Monastery of San Martín Pinario",
+        lat: 42.8802,
+        lng: -8.5443,
+        description: "Visit this impressive monastery, which dates back to the 10th century.",
+        duration: "1-2 hours"
+      },
+      {
+        day: 3,
+        positionInDay: 2,
+        name: "Mercadode Abastos",
+        lat: 42.8801,
+        lng: -8.5442,
+        description: "Browse the stalls at this lively market, which sells fresh produce, seafood, and other local specialties.",
+        duration: "1-2 hours"
+      },
+      {
+        day: 3,
+        positionInDay: 3,
+        name: "Convento de Santa Clara",
+        lat: 42.8749,
+        lng: -8.5443,
+        description: "Explore this historic building, which now houses a restaurant and a museum dedicated to the history of Santiago de Compostela.",
+        duration: "1-2 hours"
+      },
+      {
+        day: 3,
+        positionInDay: 4,
+        name: "Galician Center for Contemporary Art",
+        lat: 42.8788,
+        lng: -8.5462,
+        description: "Visit this museum of contemporary art, which features works by Galician artists and international exhibitions.",
+        duration: "1-2 hours"
+      },
+      {
+        day: 4,
+        positionInDay: 1,
+        name: "Pazo de Raxoi",
+        lat: 42.8801,
+        lng: -8.5466,
+        description: "Visit the official residence of the President of the Galician Government and the Mayor of Santiago de Compostela, located in a historic building with beautiful gardens.",
+        duration: "1-2 hours"
+      },
+      {
+        day: 4,
+        positionInDay: 2,
+        name: "Parque do Monte de San Pedro",
+        lat: 43.4062,
+        lng: -8.4098,
+        description: "Take a day trip to this park, located on a hill overlooking the city of A Coruña, with stunning views of the coast and the Atlantic Ocean.",
+        duration: "3-4 hours"
+      },
+      {
+        day: 4,
+        positionInDay: 3,
+        name: "Casa de la Troya",
+        lat: 42.8762,
+        lng: -8.5444,
+        description: "Explore this historic building, which now houses a restaurant and a museum dedicated to the history of Santiago de Compostela.",
+        duration: "1-2 hours"
+      },
+      {
+        day: 4,
+        positionInDay: 4,
+        name: "Monastery of San Lourenzo de Trasouto",
+        lat: 42.8923,
+        lng: -8.5378,
+        description: "Visit this peaceful monastery, which dates back to the 9th century and features Romanesque and Gothic architecture.",
+        duration: "1-2 hours"
+      }
+    ];
 
 
 
@@ -142,10 +184,11 @@
       const [markers, setMarkers] = useState([]);
 
       useEffect(() => {
-        const mapInstance = L.map('mapid', {
-          center: [41.147517, -8.611665],
-          zoom: 15,
-        });
+        // assuming your itinerary is stored in the 'itinerary' variable
+        const coordinates = locations.map(activity => [activity.lat, activity.lng]);
+        const mapInstance = L.map('mapid');
+        const bounds = L.latLngBounds(coordinates);
+        mapInstance.fitBounds(bounds);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -159,13 +202,16 @@
           locations.forEach((location) => {
             const markerIcon = L.divIcon({
               className: 'custom-icon',
-              html: `<div style="background-color: ${markerColors[location.day]}; width: 30px; height: 30px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; padding: 2px; border: 2px solid white;">${location.day}: ${location.positionInDay}</div>`
+              html: `<div style="background-color: ${markerColors[location.day]}; width: 25px; height: 25px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; padding: 5px; border: 3px solid white; color: white;">
+          <div>${location.day}:${location.positionInDay}</div>
+        </div>`
             });
-            
+
             const marker = L.marker([location.lat, location.lng], { icon: markerIcon })
               .addTo(map)
-              .bindPopup(`<strong>${location.name}</strong><br>${location.description}`);
-            
+              .bindPopup(`<h3>${location.name}</h3><p>${location.description}</p><p><strong>Duration:</strong> ${location.duration}</p>`);
+
+
             setMarkers((markers) => [...markers, marker]);
           });
         }
@@ -181,4 +227,5 @@
     ReactDOM.render(<Map />, document.getElementById('root'));
   </script>
 </body>
+
 </html>
