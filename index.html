@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oporto Itinerario - ReactJS y Leaflet</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+  <style>
+    #mapid {
+      height: 100vh;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const locations = [
+  {
+    day: 1,
+    positionInDay: 1,
+    name: 'Avenida dos Aliados',
+    lat: 41.147517,
+    lng: -8.611665,
+    description: 'El corazón de Oporto, rodeado de edificios históricos y monumentos emblemáticos.'
+  },
+  {
+    day: 1,
+    positionInDay: 2,
+    name: 'Estación de São Bento',
+    lat: 41.145556,
+    lng: -8.610586,
+    description: 'Una estación de tren histórica, conocida por su vestíbulo decorado con azulejos portugueses.'
+  },
+  {
+    day: 1,
+    positionInDay: 3,
+    name: 'Rua das Flores',
+    lat: 41.143171,
+    lng: -8.614787,
+    description: 'Una calle peatonal llena de tiendas, restaurantes y lugares de interés turístico.'
+  },
+  {
+    day: 1,
+    positionInDay: 4,
+    name: 'Iglesia de San Ildefonso',
+    lat: 41.146056,
+    lng: -8.605936,
+    description: 'Una iglesia barroca con una fachada de azulejos portugueses azules y blancos.'
+  },
+  {
+    day: 1,
+    positionInDay: 5,
+    name: 'Librería Lello',
+    lat: 41.146906,
+    lng: -8.614493,
+    description: 'Una de las librerías más bellas del mundo, famosa por su arquitectura y decoración neogótica.'
+  },
+  {
+    day: 1,
+    positionInDay: 6,
+    name: 'Torre de los Clérigos',
+    lat: 41.145665,
+    lng: -8.613786,
+    description: 'Una torre barroca que ofrece vistas panorámicas de Oporto desde su mirador.'
+  },
+  {
+    day: 2,
+    positionInDay: 1,
+    name: 'Ribeira',
+    lat: 41.140476,
+    lng: -8.614785,
+    description: 'El pintoresco barrio histórico a orillas del río Duero, famoso por sus callejuelas y plazas.'
+  },
+  {
+    day: 2,
+    positionInDay: 2,
+    name: 'Puente Dom Luís I',
+    lat: 41.140404,
+    lng: -8.609861,
+    description: 'Un icónico puente de dos niveles que conecta Oporto con Vila Nova de Gaia.'
+  },
+  {
+    day: 2,
+    positionInDay: 3,
+    name: 'Vila Nova de Gaia',
+    lat: 41.1333,
+    lng: -8.6172,
+    description: 'Una ciudad ubicada al otro lado del río Duero, famosa por sus bodegas de vino de Oporto.'
+  },
+  {
+    day: 2,
+    positionInDay: 4,
+    name: 'Catedral (Sé)',
+    lat: 41.142895,
+    lng: -8.611267,
+    description: 'La catedral de Oporto, una impresionante estructura que combina estilos románico, gótico y barroco.'
+  },
+  {
+    day: 2,
+    positionInDay: 5,
+    name: 'Palacio da Bolsa',
+    lat: 41.141405,
+    lng: -8.615861,
+    description: 'Un palacio del siglo XIX que solía ser la bolsa de valores de Oporto, conocido por su ornamentado Salón Árabe.'
+  },
+  {
+    day: 3,
+    positionInDay: 1,
+    name: 'Guimarães',
+    lat: 41.44443,
+    lng: -8.29619,
+    description: 'Una ciudad histórica considerada la cuna de Portugal, con un castillo medieval y un palacio renacentista.'
+  },
+  {
+    day: 4,
+    positionInDay: 1,
+    name: 'Aveiro',
+    lat: 40.641184,
+    lng: -8.653617,
+    description: 'Una encantadora ciudad costera apodada la "Venecia de Portugal" por sus canales y coloridos barcos moliceiros.'
+  }
+];
+
+
+
+    const markerColors = {
+      1: 'deepskyblue',
+      2: 'red',
+      3: 'lightgreen',
+      4: 'mediumpurple'
+    };
+
+    const Map = () => {
+      const [map, setMap] = useState(null);
+      const [markers, setMarkers] = useState([]);
+
+      useEffect(() => {
+        const mapInstance = L.map('mapid', {
+          center: [41.147517, -8.611665],
+          zoom: 15,
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(mapInstance);
+
+        setMap(mapInstance);
+      }, []);
+
+      useEffect(() => {
+        if (map) {
+          locations.forEach((location) => {
+            const markerIcon = L.divIcon({
+              className: 'custom-icon',
+              html: `<div style="background-color: ${markerColors[location.day]}; width: 30px; height: 30px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; padding: 2px; border: 2px solid white;">${location.day}: ${location.positionInDay}</div>`
+            });
+            
+            const marker = L.marker([location.lat, location.lng], { icon: markerIcon })
+              .addTo(map)
+              .bindPopup(`<strong>${location.name}</strong><br>${location.description}`);
+            
+            setMarkers((markers) => [...markers, marker]);
+          });
+        }
+      }, [map]);
+
+
+
+      return (
+        <div id="mapid" />
+      );
+    };
+
+    ReactDOM.render(<Map />, document.getElementById('root'));
+  </script>
+</body>
+</html>
